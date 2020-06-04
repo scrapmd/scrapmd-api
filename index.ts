@@ -1,13 +1,58 @@
-import * as Mercury from "@postlight/mercury-parser";
-import * as TurndownService from 'turndown'
+import * as Mercury from '@postlight/mercury-parser';
+import * as TurndownService from 'turndown';
+import * as express from 'express';
+import * as bodyParser from 'body-parser';
+import * as URL from 'url';
+import * as path from 'path';
+import * as crypto from 'crypto';
+import { JSDOM } from 'jsdom';
 const turndownService = new TurndownService();
-const url = process.argv[2];
-console.info(url);
+const port = parseInt(process.env.PORT || '8000');
+const app = express();
+app.use(bodyParser.json({ limit: '5mb' }));
+const imgdir = 'img';
 
-Mercury.parse(url).then(result => {
-  const content = result.content;
-  const md = turndownService.turndown(content);
-  const images = (content.match(/<img [^>]*src="([^"]+)"[^>]*>/ig) || []).map(img => img.match(/src="([^"]+)"/)[1]);
-  console.info(images);
+const responseResult = async (url: string, html: string | null, res: express.Response) => {
+  try {
+    const result = await Mercury.parse(url, { html });
+    const { content } = result;
+    const dom = new JSDOM(content);
+    const imageTags = dom.window.document.getElementsByTagName('img');
+    const images: { [name: string]: string } = {};
+    Array.from(imageTags).forEach((img) => {
+      const rawsrc = img.src.replace(/^\\\"(.+)\\\"$/, '$1');
+      const ext = path.extname(rawsrc) || '.png';
+      const fullsrc = URL.resolve(url, rawsrc);
+      const md5 = crypto.createHash('md5');
+      const sum = md5.update(rawsrc, 'utf8').digest('hex');
+      const sumsrc = `${imgdir}/${sum}${ext}`;
+      img.src = sumsrc;
+      images[sumsrc] = fullsrc;
+    });
+    const anchorTags = dom.window.document.getElementsByTagName('a');
+    Array.from(anchorTags).forEach((a) => {
+      a.href = URL.resolve(url, a.href.replace(/^\\\"(.+)\\\"$/, '$1'));
+    });
+    const markdown = turndownService.turndown(dom.window.document.body.innerHTML);
+    res.json({ ...result, markdown, images });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error });
+  }
+};
 
+app.get('/', async (req, res) => {
+  const { url } = req.query;
+  console.info(`Start parsing ${url}`);
+  await responseResult(url as string, null, res);
+});
+
+app.post('/', async (req, res) => {
+  const { url, html } = req.body;
+  console.info(`Start parsing ${url} with prefetched HTML ${html}`);
+  await responseResult(url, html, res);
+});
+
+app.listen(port, () => {
+  console.log(`Example app listening at http://localhost:${port}`);
 });
