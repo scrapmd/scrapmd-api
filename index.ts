@@ -1,4 +1,4 @@
-import * as Mercury from '@postlight/mercury-parser';
+import * as Mercury from '@ngs/mercury-parser';
 import * as TurndownService from 'turndown';
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
