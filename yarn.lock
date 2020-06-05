@@ -10,18 +10,10 @@
     core-js "^2.6.5"
     regenerator-runtime "^0.13.4"
 
-"@postlight/ci-failed-test-reporter@^1.0":
-  version "1.0.26"
-  resolved "https://registry.yarnpkg.com/@postlight/ci-failed-test-reporter/-/ci-failed-test-reporter-1.0.26.tgz#dbb8a07bf2e500476dc6bac0611aac2c8fbbe567"
-  integrity sha512-xfXzxyOiKhco7Gx2OLTe9b66b0dFJw0elg94KGHoQXf5F8JqqFvdo35J8wayGOor64CSMvn+4Bjlu2NKV+yTGA==
-  dependencies:
-    dotenv "^6.2.0"
-    node-fetch "^2.3.0"
-
-"@postlight/mercury-parser@^2.2.0":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@postlight/mercury-parser/-/mercury-parser-2.2.0.tgz#eec9043a6f1047c95e2f1f9e3e20fcc870df327a"
-  integrity sha512-nz6dIvCAaiv74o1vhhp0BRsUe+ysPbZG5mVNpJmgLoI/goOBqRMM3Yg8uXtnv++e7tzKFSXdls8b2/zKk1qL0Q==
+"@ngs/mercury-parser@^2.2.1":
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/@ngs/mercury-parser/-/mercury-parser-2.2.1.tgz#33a9dc1a1ea898e0255eb67c16e5bcc7fec20eb3"
+  integrity sha512-6cWKFmMFTG1Vwyw6x8sPxCcLt7SlxgJAXGi5uWBurBTVAyY9SCt94ZC0ujYU+Jl/FwOnJnnpqLVnlltW3wvkhA==
   dependencies:
     "@babel/runtime-corejs2" "^7.2.0"
     "@postlight/ci-failed-test-reporter" "^1.0"
@@ -41,7 +33,15 @@
     url "^0.11.0"
     valid-url "^1.0.9"
     wuzzy "^0.1.4"
-    yargs-parser "^13.0.0"
+    yargs-parser "^14.0.0"
+
+"@postlight/ci-failed-test-reporter@^1.0":
+  version "1.0.26"
+  resolved "https://registry.yarnpkg.com/@postlight/ci-failed-test-reporter/-/ci-failed-test-reporter-1.0.26.tgz#dbb8a07bf2e500476dc6bac0611aac2c8fbbe567"
+  integrity sha512-xfXzxyOiKhco7Gx2OLTe9b66b0dFJw0elg94KGHoQXf5F8JqqFvdo35J8wayGOor64CSMvn+4Bjlu2NKV+yTGA==
+  dependencies:
+    dotenv "^6.2.0"
+    node-fetch "^2.3.0"
 
 "@postman/form-data@~3.1.0":
   version "3.1.0"
@@ -1756,10 +1756,10 @@ xmlchars@^2.2.0:
   resolved "https://registry.yarnpkg.com/xmlchars/-/xmlchars-2.2.0.tgz#060fe1bcb7f9c76fe2a17db86a9bc3ab894210cb"
   integrity sha512-JZnDKK8B0RCDw84FNdDAIpZK+JuJw+s7Lz8nksI7SIuU3UXJJslUthsi+uWBUYOwPFwW7W7PRLRfUKpxjtjFCw==
 
-yargs-parser@^13.0.0:
-  version "13.1.2"
-  resolved "https://registry.yarnpkg.com/yargs-parser/-/yargs-parser-13.1.2.tgz#130f09702ebaeef2650d54ce6e3e5706f7a4fb38"
-  integrity sha512-3lbsNRf/j+A4QuSZfDRA7HRSfWrzO0YjqTJd5kjAq37Zep1CEgaYmrH9Q3GwPiB9cHyd1Y1UwggGhJGoxipbzg==
+yargs-parser@^14.0.0:
+  version "14.0.0"
+  resolved "https://registry.yarnpkg.com/yargs-parser/-/yargs-parser-14.0.0.tgz#42e25777b06718ec99eac2c3a98ad3de73b6818f"
+  integrity sha512-zn/Mnx+tbFjkCFUodEpjXckNS65NfpB5oyqOkDDEG/8uxlfLZJu2IoBLQFjukUkn9rBbGkVYNzrDh6qy4NUd3g==
   dependencies:
     camelcase "^5.0.0"
     decamelize "^1.2.0"
