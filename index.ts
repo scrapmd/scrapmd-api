@@ -12,14 +12,15 @@ const app = express();
 app.use(bodyParser.json({ limit: '5mb' }));
 const imgdir = 'img';
 
-const responseResult = async (url: string, html: string | null, res: express.Response) => {
+const responseResult = async (url: string, title: string, html: string | null, res: express.Response) => {
   try {
     const result = await Mercury.parse(url, { html });
+    result.title = title || result.title;
     const { content } = result;
     const dom = new JSDOM(content);
     const imageTags = dom.window.document.getElementsByTagName('img');
     const images: { [name: string]: string } = {};
-    Array.from(imageTags).forEach((img) => {
+    Array.from(imageTags).forEach(img => {
       const rawsrc = img.src.replace(/^\\\"(.+)\\\"$/, '$1');
       const ext = path.extname(rawsrc) || '.png';
       const fullsrc = URL.resolve(url, rawsrc);
@@ -30,7 +31,7 @@ const responseResult = async (url: string, html: string | null, res: express.Res
       images[sumsrc] = fullsrc;
     });
     const anchorTags = dom.window.document.getElementsByTagName('a');
-    Array.from(anchorTags).forEach((a) => {
+    Array.from(anchorTags).forEach(a => {
       a.href = URL.resolve(url, a.href.replace(/^\\\"(.+)\\\"$/, '$1'));
     });
     const markdown = turndownService.turndown(dom.window.document.body.innerHTML);
@@ -42,15 +43,15 @@ const responseResult = async (url: string, html: string | null, res: express.Res
 };
 
 app.get('/', async (req, res) => {
-  const { url } = req.query;
+  const { url, title } = req.query;
   console.info(`Start parsing ${url}`);
-  await responseResult(url as string, null, res);
+  await responseResult(url as string, title as string, null, res);
 });
 
 app.post('/', async (req, res) => {
-  const { url, html } = req.body;
+  const { url, html, title } = req.body;
   console.info(`Start parsing ${url} with prefetched HTML ${html}`);
-  await responseResult(url, html, res);
+  await responseResult(url, title, html, res);
 });
 
 app.listen(port, () => {
