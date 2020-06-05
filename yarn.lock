@@ -10,10 +10,10 @@
     core-js "^2.6.5"
     regenerator-runtime "^0.13.4"
 
-"@ngs/mercury-parser@^2.2.1":
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/@ngs/mercury-parser/-/mercury-parser-2.2.1.tgz#33a9dc1a1ea898e0255eb67c16e5bcc7fec20eb3"
-  integrity sha512-6cWKFmMFTG1Vwyw6x8sPxCcLt7SlxgJAXGi5uWBurBTVAyY9SCt94ZC0ujYU+Jl/FwOnJnnpqLVnlltW3wvkhA==
+"@ngs/mercury-parser@^2.2.4":
+  version "2.2.4"
+  resolved "https://registry.yarnpkg.com/@ngs/mercury-parser/-/mercury-parser-2.2.4.tgz#a41c007e33ed2b0bb226b82e651ddd26ad2aa29a"
+  integrity sha512-jXHqq31NGIv4PH8dtNbDQNyPT6T5OMar7OzH535dDPo243/9g0fDUoYCfix0Nz2ZFaLEeyuk2TZejLcMMIssOg==
   dependencies:
     "@babel/runtime-corejs2" "^7.2.0"
     "@postlight/ci-failed-test-reporter" "^1.0"
@@ -116,13 +116,6 @@
   version "5.0.3"
   resolved "https://registry.yarnpkg.com/@types/parse5/-/parse5-5.0.3.tgz#e7b5aebbac150f8b5fdd4a46e7f0bd8e65e19109"
   integrity sha512-kUNnecmtkunAoQ3CnjmMkzNU/gtxG8guhi+Fk2U/kOpIKjIMKnXGp4IJCgQJrXSgMsWYimYG4TGjz/UzbGEBTw==
-
-"@types/postlight__mercury-parser@^2.2.2":
-  version "2.2.2"
-  resolved "https://registry.yarnpkg.com/@types/postlight__mercury-parser/-/postlight__mercury-parser-2.2.2.tgz#9826f407cb1e23fd04a9bb21a5a8a98f51a4e6f5"
-  integrity sha512-nYKSHPNbFHRxLyKUKW7KK3tcJ4UgwCdE13EeLTOr9xxHdigtkJOP5LbfzrN4NzEpYSzNlRjLWi5SiAGKDqOTOw==
-  dependencies:
-    "@types/node" "*"
 
 "@types/qs@*":
   version "6.9.3"
