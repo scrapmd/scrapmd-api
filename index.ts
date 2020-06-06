@@ -34,7 +34,10 @@ const responseResult = async (url: string, title: string, html: string | null, r
     Array.from(anchorTags).forEach(a => {
       a.href = URL.resolve(url, a.href.replace(/^\\\"(.+)\\\"$/, '$1'));
     });
-    const markdown = turndownService.turndown(dom.window.document.body.innerHTML);
+    let markdown = turndownService.turndown(dom.window.document.body.innerHTML);
+    if (title) {
+      markdown = `# ${title}\n\n${markdown}`
+    }
     res.json({ ...result, markdown, images });
   } catch (error) {
     console.error(error);
