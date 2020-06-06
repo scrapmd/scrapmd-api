@@ -22,7 +22,7 @@ const responseResult = async (url: string, title: string, html: string | null, r
     const images: { [name: string]: string } = {};
     Array.from(imageTags).forEach(img => {
       const rawsrc = img.src.replace(/^\\\"(.+)\\\"$/, '$1');
-      const ext = path.extname(rawsrc) || '.png';
+      const ext = path.extname(rawsrc.replace(/\?.*$/, '')) || '.png';
       const fullsrc = URL.resolve(url, rawsrc);
       const md5 = crypto.createHash('md5');
       const sum = md5.update(rawsrc, 'utf8').digest('hex');
@@ -36,7 +36,7 @@ const responseResult = async (url: string, title: string, html: string | null, r
     });
     let markdown = turndownService.turndown(dom.window.document.body.innerHTML);
     if (title) {
-      markdown = `# ${title}\n\n${markdown}`
+      markdown = `# ${title}\n\n${markdown}`;
     }
     res.json({ ...result, markdown, images });
   } catch (error) {
