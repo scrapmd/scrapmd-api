@@ -6,7 +6,13 @@ import * as URL from 'url';
 import * as path from 'path';
 import * as crypto from 'crypto';
 import { JSDOM } from 'jsdom';
-const turndownService = new TurndownService();
+import { Html5Entities } from 'html-entities';
+
+const turndownService = new TurndownService({
+  headingStyle: 'atx',
+  codeBlockStyle: 'fenced',
+});
+turndownService.use(require('turndown-plugin-gfm').gfm);
 const port = parseInt(process.env.PORT || '8000');
 const app = express();
 app.use(bodyParser.json({ limit: '5mb' }));
@@ -20,7 +26,7 @@ const responseResult = async (url: string, title: string, html: string | null, r
     const dom = new JSDOM(content);
     const imageTags = dom.window.document.getElementsByTagName('img');
     const images: { [name: string]: string } = {};
-    Array.from(imageTags).forEach(img => {
+    Array.from(imageTags).forEach((img) => {
       const rawsrc = img.src.replace(/^\\\"(.+)\\\"$/, '$1');
       const ext = path.extname(rawsrc.replace(/\?.*$/, '')) || '.png';
       const fullsrc = URL.resolve(url, rawsrc);
@@ -31,7 +37,7 @@ const responseResult = async (url: string, title: string, html: string | null, r
       images[sumsrc] = fullsrc;
     });
     const anchorTags = dom.window.document.getElementsByTagName('a');
-    Array.from(anchorTags).forEach(a => {
+    Array.from(anchorTags).forEach((a) => {
       a.href = URL.resolve(url, a.href.replace(/^\\\"(.+)\\\"$/, '$1'));
     });
     let markdown = turndownService.turndown(dom.window.document.body.innerHTML);
