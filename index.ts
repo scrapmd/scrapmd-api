@@ -6,7 +6,6 @@ import * as URL from 'url';
 import * as path from 'path';
 import * as crypto from 'crypto';
 import { JSDOM } from 'jsdom';
-import { Html5Entities } from 'html-entities';
 
 const turndownService = new TurndownService({
   headingStyle: 'atx',
