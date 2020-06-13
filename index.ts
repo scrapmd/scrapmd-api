@@ -1,4 +1,4 @@
-import * as Mercury from '@ngs/mercury-parser';
+import * as Mercury from '@scrapmd/mercury-parser';
 import * as TurndownService from 'turndown';
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
@@ -19,7 +19,7 @@ const imgdir = 'img';
 
 const responseResult = async (url: string, title: string, html: string | null, res: express.Response) => {
   try {
-    const result = await Mercury.parse(url, { html });
+    const result = await Mercury.parse(url, { html, fetchAllPages: false });
     result.title = title || result.title;
     const { content } = result;
     const dom = new JSDOM(content);

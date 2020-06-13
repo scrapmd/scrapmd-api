@@ -10,31 +10,6 @@
     core-js "^2.6.5"
     regenerator-runtime "^0.13.4"
 
-"@ngs/mercury-parser@^2.2.4":
-  version "2.2.4"
-  resolved "https://registry.yarnpkg.com/@ngs/mercury-parser/-/mercury-parser-2.2.4.tgz#a41c007e33ed2b0bb226b82e651ddd26ad2aa29a"
-  integrity sha512-jXHqq31NGIv4PH8dtNbDQNyPT6T5OMar7OzH535dDPo243/9g0fDUoYCfix0Nz2ZFaLEeyuk2TZejLcMMIssOg==
-  dependencies:
-    "@babel/runtime-corejs2" "^7.2.0"
-    "@postlight/ci-failed-test-reporter" "^1.0"
-    browser-request "github:postlight/browser-request#feat-add-headers-to-response"
-    cheerio "^0.22.0"
-    difflib "github:postlight/difflib.js"
-    ellipsize "0.1.0"
-    iconv-lite "0.5.0"
-    jquery "^3.4.1"
-    moment "^2.23.0"
-    moment-parseformat "3.0.0"
-    moment-timezone "0.5.26"
-    postman-request "^2.88.1-postman.7.1"
-    request-promise "^4.2.2"
-    string-direction "^0.1.2"
-    turndown "^5.0.3"
-    url "^0.11.0"
-    valid-url "^1.0.9"
-    wuzzy "^0.1.4"
-    yargs-parser "^14.0.0"
-
 "@postlight/ci-failed-test-reporter@^1.0":
   version "1.0.26"
   resolved "https://registry.yarnpkg.com/@postlight/ci-failed-test-reporter/-/ci-failed-test-reporter-1.0.26.tgz#dbb8a07bf2e500476dc6bac0611aac2c8fbbe567"
@@ -58,6 +33,31 @@
   integrity sha512-k57fzmAZ2PJGxfOA4SGR05ejorHbVAa/84Hxh/2nAztjNXc4ZjOm9NUIk6/Z6LCrBvJZqjRZbN8e/nROVUPVdg==
   dependencies:
     safe-buffer "^5.0.1"
+
+"@scrapmd/mercury-parser@2.2.1":
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/@scrapmd/mercury-parser/-/mercury-parser-2.2.1.tgz#608a6a1336e0c1135c128df0d27990e09203bcb9"
+  integrity sha512-k9LEPKWQsoi9fMmutTzdol8NvkiREimU22CaLVh/oHjFqj6oobWjlz1ASyEegho6NDoTpnGcuzwvzVt2TmnCQQ==
+  dependencies:
+    "@babel/runtime-corejs2" "^7.2.0"
+    "@postlight/ci-failed-test-reporter" "^1.0"
+    browser-request "github:postlight/browser-request#feat-add-headers-to-response"
+    cheerio "^0.22.0"
+    difflib "github:postlight/difflib.js"
+    ellipsize "0.1.0"
+    iconv-lite "0.5.0"
+    jquery "^3.4.1"
+    moment "^2.23.0"
+    moment-parseformat "3.0.0"
+    moment-timezone "0.5.26"
+    postman-request "^2.88.1-postman.7.1"
+    request-promise "^4.2.2"
+    string-direction "^0.1.2"
+    turndown "^5.0.3"
+    url "^0.11.0"
+    valid-url "^1.0.9"
+    wuzzy "^0.1.4"
+    yargs-parser "^14.0.0"
 
 "@types/body-parser@*":
   version "1.19.0"
