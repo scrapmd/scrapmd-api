@@ -34,10 +34,10 @@
   dependencies:
     safe-buffer "^5.0.1"
 
-"@scrapmd/mercury-parser@2.2.1":
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/@scrapmd/mercury-parser/-/mercury-parser-2.2.1.tgz#608a6a1336e0c1135c128df0d27990e09203bcb9"
-  integrity sha512-k9LEPKWQsoi9fMmutTzdol8NvkiREimU22CaLVh/oHjFqj6oobWjlz1ASyEegho6NDoTpnGcuzwvzVt2TmnCQQ==
+"@scrapmd/mercury-parser@2.2.2":
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/@scrapmd/mercury-parser/-/mercury-parser-2.2.2.tgz#b0e7f286b17377fc91bdb478f6a11a2a1d85403b"
+  integrity sha512-SIZdQORb3fPwL5Kn0ooxILd9ZjoAytUe8vlSJK4ESckZEDDoC3d46JzaFh2MZ78esBESnuBoAxcSxzLkzPrl8w==
   dependencies:
     "@babel/runtime-corejs2" "^7.2.0"
     "@postlight/ci-failed-test-reporter" "^1.0"
