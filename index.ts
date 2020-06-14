@@ -17,7 +17,13 @@ const app = express();
 app.use(bodyParser.json({ limit: '5mb' }));
 const imgdir = 'img';
 
-const responseResult = async (url: string, title: string, html: string | null, res: express.Response) => {
+const responseResult = async (
+  url: string,
+  title: string,
+  html: string | null,
+  noTagCheck: boolean,
+  res: express.Response,
+) => {
   try {
     const result = await Mercury.parse(url, { html, fetchAllPages: false });
     result.title = title || result.title;
@@ -40,8 +46,11 @@ const responseResult = async (url: string, title: string, html: string | null, r
       a.href = URL.resolve(url, a.href.replace(/^\\\"(.+)\\\"$/, '$1'));
     });
     let markdown = turndownService.turndown(dom.window.document.body.innerHTML);
-    if (title) {
-      markdown = `# ${title}\n\n${markdown}`;
+    if (result.title) {
+      markdown = `# ${result.title}\n\n${markdown}`;
+    }
+    if (!noTagCheck && content.indexOf('data-scrapmd-ok') === -1) {
+      markdown = '';
     }
     res.json({ ...result, markdown, images });
   } catch (error) {
@@ -51,15 +60,15 @@ const responseResult = async (url: string, title: string, html: string | null, r
 };
 
 app.get('/', async (req, res) => {
-  const { url, title } = req.query;
+  const { url, title, notagcheck } = req.query;
   console.info(`Start parsing ${url}`);
-  await responseResult(url as string, title as string, null, res);
+  await responseResult(url as string, title as string, null, notagcheck === '1', res);
 });
 
 app.post('/', async (req, res) => {
-  const { url, html, title } = req.body;
+  const { url, html, title, notagcheck } = req.body;
   console.info(`Start parsing ${url} with prefetched HTML ${html}`);
-  await responseResult(url, title, html, res);
+  await responseResult(url, title, html, notagcheck === '1', res);
 });
 
 app.listen(port, () => {
