@@ -16,6 +16,7 @@ const port = parseInt(process.env.PORT || '8000');
 const app = express();
 app.use(bodyParser.json({ limit: '5mb' }));
 const imgdir = 'img';
+const checkAttribute = 'data-scrapmd-ok';
 
 const responseResult = async (
   url: string,
@@ -31,7 +32,7 @@ const responseResult = async (
     const dom = new JSDOM(content);
     const imageTags = dom.window.document.getElementsByTagName('img');
     const images: { [name: string]: string } = {};
-    Array.from(imageTags).forEach((img) => {
+    Array.from(imageTags).forEach(img => {
       const rawsrc = img.src.replace(/^\\\"(.+)\\\"$/, '$1');
       const ext = path.extname(rawsrc.replace(/\?.*$/, '')) || '.png';
       const fullsrc = URL.resolve(url, rawsrc);
@@ -42,14 +43,14 @@ const responseResult = async (
       images[sumsrc] = fullsrc;
     });
     const anchorTags = dom.window.document.getElementsByTagName('a');
-    Array.from(anchorTags).forEach((a) => {
+    Array.from(anchorTags).forEach(a => {
       a.href = URL.resolve(url, a.href.replace(/^\\\"(.+)\\\"$/, '$1'));
     });
     let markdown = turndownService.turndown(dom.window.document.body.innerHTML);
     if (result.title) {
       markdown = `# ${result.title}\n\n${markdown}`;
     }
-    if (!noTagCheck && content.indexOf('data-scrapmd-ok') === -1) {
+    if (!noTagCheck && html.indexOf(checkAttribute) === -1 && content.indexOf(checkAttribute) === -1) {
       markdown = '';
     }
     res.json({ ...result, markdown, images });
