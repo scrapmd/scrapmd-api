@@ -50,7 +50,7 @@ const responseResult = async (
     if (result.title) {
       markdown = `# ${result.title}\n\n${markdown}`;
     }
-    if (!noTagCheck && html.indexOf(checkAttribute) === -1 && content.indexOf(checkAttribute) === -1) {
+    if (!noTagCheck && (html || '').indexOf(checkAttribute) === -1 && content.indexOf(checkAttribute) === -1) {
       markdown = '';
     }
     res.json({ ...result, markdown, images });
