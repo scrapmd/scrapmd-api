@@ -6,6 +6,7 @@ import * as URL from 'url';
 import * as path from 'path';
 import * as crypto from 'crypto';
 import { JSDOM } from 'jsdom';
+import fetch from 'node-fetch';
 
 const turndownService = new TurndownService({
   headingStyle: 'atx',
@@ -21,18 +22,25 @@ const checkAttribute = 'data-scrapmd-ok';
 const responseResult = async (
   url: string,
   title: string,
-  html: string | null,
+  prefetchedHTML: string | null,
   noTagCheck: boolean,
   res: express.Response,
 ) => {
   try {
+    let html = prefetchedHTML || '';
+    if (!html) {
+      try {
+        const res = await fetch(url);
+        html = await res.text();
+      } catch {}
+    }
     const result = await Mercury.parse(url, { html, fetchAllPages: false });
     result.title = title || result.title;
     const { content } = result;
     const dom = new JSDOM(content);
     const imageTags = dom.window.document.getElementsByTagName('img');
     const images: { [name: string]: string } = {};
-    Array.from(imageTags).forEach(img => {
+    Array.from(imageTags).forEach((img) => {
       const rawsrc = img.src.replace(/^\\\"(.+)\\\"$/, '$1');
       const ext = path.extname(rawsrc.replace(/\?.*$/, '')) || '.png';
       const fullsrc = URL.resolve(url, rawsrc);
@@ -43,14 +51,14 @@ const responseResult = async (
       images[sumsrc] = fullsrc;
     });
     const anchorTags = dom.window.document.getElementsByTagName('a');
-    Array.from(anchorTags).forEach(a => {
+    Array.from(anchorTags).forEach((a) => {
       a.href = URL.resolve(url, a.href.replace(/^\\\"(.+)\\\"$/, '$1'));
     });
     let markdown = turndownService.turndown(dom.window.document.body.innerHTML);
     if (result.title) {
       markdown = `# ${result.title}\n\n${markdown}`;
     }
-    if (!noTagCheck && (html || '').indexOf(checkAttribute) === -1 && content.indexOf(checkAttribute) === -1) {
+    if (!noTagCheck && html.indexOf(checkAttribute) === -1 && content.indexOf(checkAttribute) === -1) {
       markdown = '';
     }
     res.json({ ...result, markdown, images });
