@@ -69,15 +69,15 @@ const responseResult = async (
 };
 
 app.get('/', async (req, res) => {
-  const { url, title, notagcheck } = req.query;
+  const { url, title, scrapmdnotagcheck } = req.query;
   console.info(`Start parsing ${url}`);
-  await responseResult(url as string, title as string, null, notagcheck === '1', res);
+  await responseResult(url as string, title as string, null, scrapmdnotagcheck === '1', res);
 });
 
 app.post('/', async (req, res) => {
-  const { url, html, title, notagcheck } = req.body;
+  const { url, html, title, scrapmdnotagcheck } = req.body;
   console.info(`Start parsing ${url} with prefetched HTML ${html}`);
-  await responseResult(url, title, html, notagcheck === '1', res);
+  await responseResult(url, title, html, scrapmdnotagcheck === '1', res);
 });
 
 app.listen(port, () => {
