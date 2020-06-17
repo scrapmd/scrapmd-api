@@ -40,7 +40,7 @@ const responseResult = async (
     const dom = new JSDOM(content);
     const imageTags = dom.window.document.getElementsByTagName('img');
     const images: { [name: string]: string } = {};
-    Array.from(imageTags).forEach((img) => {
+    Array.from(imageTags).forEach(img => {
       const rawsrc = img.src.replace(/^\\\"(.+)\\\"$/, '$1');
       const ext = path.extname(rawsrc.replace(/\?.*$/, '')) || '.png';
       const fullsrc = URL.resolve(url, rawsrc);
@@ -51,7 +51,7 @@ const responseResult = async (
       images[sumsrc] = fullsrc;
     });
     const anchorTags = dom.window.document.getElementsByTagName('a');
-    Array.from(anchorTags).forEach((a) => {
+    Array.from(anchorTags).forEach(a => {
       a.href = URL.resolve(url, a.href.replace(/^\\\"(.+)\\\"$/, '$1'));
     });
     let markdown = turndownService.turndown(dom.window.document.body.innerHTML);
@@ -71,13 +71,13 @@ const responseResult = async (
 app.get('/', async (req, res) => {
   const { url, title, scrapmdnotagcheck } = req.query;
   console.info(`Start parsing ${url}`);
-  await responseResult(url as string, title as string, null, scrapmdnotagcheck === '1', res);
+  await responseResult(url as string, title as string, null, !!scrapmdnotagcheck, res);
 });
 
 app.post('/', async (req, res) => {
   const { url, html, title, scrapmdnotagcheck } = req.body;
   console.info(`Start parsing ${url} with prefetched HTML ${html}`);
-  await responseResult(url, title, html, scrapmdnotagcheck === '1', res);
+  await responseResult(url, title, html, !!scrapmdnotagcheck, res);
 });
 
 app.listen(port, () => {
