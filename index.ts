@@ -34,10 +34,19 @@ const responseResult = async (
         html = await res.text();
       } catch {}
     }
-    const result = await Mercury.parse(url, { html, fetchAllPages: false });
+    let dom = new JSDOM(html);
+    []
+      .concat(Array.from(dom.window.document.getElementsByTagName('header')))
+      .concat(Array.from(dom.window.document.getElementsByTagName('footer')))
+      .concat(Array.from(dom.window.document.getElementsByTagName('aside')))
+      .forEach(node => node.parentNode.removeChild(node));
+    const result = await Mercury.parse(url, {
+      html: `<html>${dom.window.document.head.innerHTML}${dom.window.document.body.innerHTML}</html>`,
+      fetchAllPages: false,
+    });
     result.title = title || result.title;
     const { content } = result;
-    const dom = new JSDOM(content);
+    dom = new JSDOM(content);
     const imageTags = dom.window.document.getElementsByTagName('img');
     const images: { [name: string]: string } = {};
     Array.from(imageTags).forEach(img => {
